@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bright Future School</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="pngtree-book-logo-template-design-study-shape-vector-png-image_12526904.png" type="image/png">
+
+  <style>
+    /* Minimal custom styles so page looks polished without external file */
+    :root {
+      --primary: #0d6efd;
+    }
+
+    body {
+      padding-top: 70px; /* space for fixed navbar */
+    }
+
+    .hero {
+      background: linear-gradient(180deg, rgba(13,110,253,0.08), rgba(13,110,253,0.02));
+      padding: 4rem 0;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background .25s ease;
+    }
+
+    .section-title {
+      font-weight: 700;
+    }
+
+    .feature-box i {
+      font-size: 1.6rem;
+      color: var(--primary);
+    }
+
+    .teacher-card .card-img-top {
+      object-fit: cover;
+      height: 240px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    /* A little spacing for subjects list */
+    .subject-card { min-height: 140px; }
+
+    footer a { text-decoration: none; }
+
+    @media (max-width: 575px) {
+      .teacher-card .card-img-top { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#home">
+        <img src="pngtree-book-logo-template-design-study-shape-vector-png-image_12526904.png" alt="logo" style="height:34px; width:34px; object-fit:contain; margin-right:8px;">
+        <span class="fw-bold">Bright Future School</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#admission">Admission</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faculty">Faculty</a></li>
+          <li class="nav-item"><a class="nav-link" href="#vision">Vision</a></li>
+          <li class="nav-item"><a class="nav-link" href="#subjects">Subjects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-7">
+          <h1 class="display-5 fw-bold">Shaping Tomorrow's Leaders Today</h1>
+          <p class="lead">We provide a nurturing environment for students to discover passions, build character, and succeed academically.</p>
+          <a href="#admission" class="btn btn-primary me-2">Apply Now</a>
+          <a href="#vision" class="btn btn-outline-primary">Our Vision</a>
+        </div>
+        <div class="col-md-5 text-center">
+          <!-- safe placeholder image -->
+          <img src="images (2).jfif" alt="Students" class="img-fluid rounded shadow">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About + Quick Stats -->
+  <section class="py-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <h2 class="section-title">About Bright Future School</h2>
+          <p>Bright Future Academy has provided quality education for over 25 years. Our mission is to nurture well-rounded individuals who excel academically while developing strong character and leadership skills.</p>
+
+          <div class="row mt-3">
+            <div class="col-md-6 mb-3">
+              <div class="d-flex gap-3">
+                <i class="bi bi-award fs-2 text-primary"></i>
+                <div>
+                  <h6 class="mb-0">Academic Excellence</h6>
+                  <small class="text-muted">Consistently ranked among top schools in the region.</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="d-flex gap-3">
+                <i class="bi bi-people fs-2 text-primary"></i>
+                <div>
+                  <h6 class="mb-0">Expert Faculty</h6>
+                  <small class="text-muted">Highly qualified and dedicated teaching staff.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-4">
+          <div class="bg-light p-4 rounded shadow-sm text-center">
+            <h5 class="mb-3">Key Facts</h5>
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="stat-number">95%</div>
+                <small class="text-muted">Graduation Rate</small>
+              </div>
+              <div>
+                <div class="stat-number">25+</div>
+                <small class="text-muted">Years Experience</small>
+              </div>
+              <div>
+                <div class="stat-number">1:15</div>
+                <small class="text-muted">Student-Teacher Ratio</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Admission Section -->
+  <section id="admission" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="section-title text-center mb-4">Admission Process</h2>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Application Form</h5>
+
+              <div id="ack" class="alert alert-success d-none" role="alert">
+                Thank you for applying. Please prepare for your admission test. You will receive further information via email.
+              </div>
+
+              <form id="admissionForm" novalidate>
+                <div class="mb-3">
+                  <label for="fullName" class="form-label">Full Name</label>
+                  <input id="fullName" name="fullName" type="text" class="form-control" required>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input id="dob" name="dob" type="date" class="form-control" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="grade" class="form-label">Grade Level Applying For</label>
+                    <select id="grade" name="grade" class="form-select" required>
+                      <option value="">Select Grade</option>
+                      <option>Kindergarten</option>
+                      <option>Elementary (1-5)</option>
+                      <option>Middle School (6-8)</option>
+                      <option>High School (9-12)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input id="email" name="email" type="email" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Contact Number</label>
+                  <input id="phone" name="phone" type="tel" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="address" class="form-label">Address</label>
+                  <textarea id="address" name="address" class="form-control" rows="2" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <h5>Why Choose Bright Future?</h5>
+          <ul class="list-unstyled">
+            <li class="mb-3"><i class="bi bi-check2-circle me-2 text-primary"></i><strong>Personalized Learning:</strong> Small class sizes ensure individual attention.</li>
+            <li class="mb-3"><i class="bi bi-check2-circle me-2 text-primary"></i><strong>Comprehensive Curriculum:</strong> Wide range of subjects & extracurricular activities.</li>
+            <li class="mb-3"><i class="bi bi-check2-circle me-2 text-primary"></i><strong>Safe Environment:</strong> Secure and nurturing campus.</li>
+          </ul>
+
+          <div class="card bg-primary text-white mt-3">
+            <div class="card-body">
+              <h6 class="card-title">Important Dates</h6>
+              <ul class="mb-0">
+                <li><i class="bi bi-calendar me-2"></i>Application Deadline: May 15</li>
+                <li><i class="bi bi-calendar me-2"></i>Entrance Test: May 30</li>
+                <li><i class="bi bi-calendar me-2"></i>Results Announcement: June 10</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Faculty Section -->
+  <section id="faculty" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Our Faculty</h2>
+
+      <div class="row g-4">
+        <!-- Teacher 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card teacher-card h-100 shadow-sm">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="Mr. Tom">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Mr. Tom</h5>
+              <p class="mb-1 text-muted">Mathematics</p>
+              <p class="card-text">With 12 years of experience, Mr. Tom makes complex mathematical concepts accessible through clear examples and interactive lessons. He believes in problem-solving and critical thinking.</p>
+              <div class="mt-auto">
+                <span class="badge bg-primary">Algebra</span>
+                <span class="badge bg-primary">Calculus</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teacher 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card teacher-card h-100 shadow-sm">
+            <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="Ms. Sarah">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Ms. Sarah</h5>
+              <p class="mb-1 text-muted">English Literature</p>
+              <p class="card-text">Ms. Sarah fosters a love for reading and strong communication. Her teaching emphasizes critical thinking, expressive writing, and confidence in public speaking.</p>
+              <div class="mt-auto">
+                <span class="badge bg-primary">Literature</span>
+                <span class="badge bg-primary">Writing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teacher 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card teacher-card h-100 shadow-sm">
+            <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="Mr. Hussain">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Mr. Hussain</h5>
+              <p class="mb-1 text-muted">Science</p>
+              <p class="card-text">Mr. Hussain brings science alive with hands-on experiments and real-world examples. He encourages curiosity and scientific inquiry in every lesson.</p>
+              <div class="mt-auto">
+                <span class="badge bg-primary">Physics</span>
+                <span class="badge bg-primary">Chemistry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teacher 4 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card teacher-card h-100 shadow-sm">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="Ms. Maria">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Ms. Maria Khan</h5>
+              <p class="mb-1 text-muted">History</p>
+              <p class="card-text">Ms. Maria connects past events to the present, helping students think critically about society and governance. She prioritizes discussion and evidence-based learning.</p>
+              <div class="mt-auto">
+                <span class="badge bg-primary">World History</span>
+                <span class="badge bg-primary">Government</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teacher 5 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card teacher-card h-100 shadow-sm">
+            <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="Mr. Samar">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Mr. Samar Abbas</h5>
+              <p class="mb-1 text-muted">Computer Science</p>
+              <p class="card-text">Mr. Samar introduces students to programming and digital literacy. He emphasizes hands-on projects and computational thinking for real-world problem solving.</p>
+              <div class="mt-auto">
+                <span class="badge bg-primary">Programming</span>
+                <span class="badge bg-primary">Web Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teacher 6 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card teacher-card h-100 shadow-sm">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="Ms. Ayesha">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Ms. Ayesha</h5>
+              <p class="mb-1 text-muted">Art & Music</p>
+              <p class="card-text">Ms. Ayesha encourages creative expression across visual and performing arts. She helps students develop confidence and a lifelong appreciation for the arts.</p>
+              <div class="mt-auto">
+                <span class="badge bg-primary">Visual Arts</span>
+                <span class="badge bg-primary">Music</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Section -->
+  <section id="vision" class="py-5">
+    <div class="container">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="section-title">Our Vision</h2>
+          <p class="lead mb-0">Bright Future School envisions a community where every child discovers and develops their unique potential. We aim to provide excellence in teaching, foster critical thinking, and cultivate responsible citizens who contribute positively to society. Our mission is to combine academic rigor with character building so students thrive in an ever-changing world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subjects Offered -->
+  <section id="subjects" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center mb-4">Subjects Offered</h2>
+
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>Mathematics</h6>
+            <small class="text-muted">Algebra, Geometry, Trigonometry, Calculus — problem solving & analytical thinking.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>Science</h6>
+            <small class="text-muted">Physics, Chemistry & Biology — inquiry-based lab work and experiments.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>English</h6>
+            <small class="text-muted">Literature, Composition & Communication — reading, writing and speaking skills.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>Computer Science</h6>
+            <small class="text-muted">Programming, Web Design & Digital Literacy — project-based learning.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>History & Social Studies</h6>
+            <small class="text-muted">World and regional history, civics and critical analysis of society.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>Art & Music</h6>
+            <small class="text-muted">Visual arts, performing arts and creative expression.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>Physical Education</h6>
+            <small class="text-muted">Team sports, fitness and holistic wellbeing.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card subject-card h-100 shadow-sm p-3">
+            <h6>Foreign Languages</h6>
+            <small class="text-muted">Language learning to build global communication skills.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center mb-4">Contact Us</h2>
+      <div class="row">
+        <div class="col-lg-6 mx-auto">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <h6>Get In Touch</h6>
+                  <p class="mb-1"><i class="bi bi-geo-alt me-2"></i>Lahore, Pakistan</p>
+                  <p class="mb-1"><i class="bi bi-telephone me-2"></i>+92 331 6619215</p>
+                  <p class="mb-1"><i class="bi bi-envelope me-2"></i>info@brightfuture.edu</p>
+
+                  <div class="mt-2">
+                    <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <form>
+                    <div class="mb-2">
+                      <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-2">
+                      <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-2">
+                      <textarea class="form-control" rows="4" placeholder="Message" required></textarea>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Send Message</button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4 bg-dark text-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+          <small>&copy; <span id="year"></span> Bright Future School. All rights reserved.</small>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <a href="#" class="text-white me-3">Privacy Policy</a>
+          <a href="#" class="text-white">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // set footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // show acknowledgement and reset form on submit
+    const admissionForm = document.getElementById('admissionForm');
+    admissionForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      // simple client-side validation (browser will also handle required)
+      if (!admissionForm.checkValidity()) {
+        admissionForm.reportValidity();
+        return;
+      }
+      // show exact required acknowledgement text
+      const ack = document.getElementById('ack');
+      ack.classList.remove('d-none');
+      // reset form fields
+      admissionForm.reset();
+      // scroll to ack for visibility
+      ack.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // navbar background on scroll
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // smooth scrolling for internal links (optional)
+    document.querySelectorAll('a.nav-link[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
