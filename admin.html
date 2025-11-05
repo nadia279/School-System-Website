@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bright Future School — Admin Dashboard</title>
+
+  <!-- Bootstrap CSS (same major version as your index) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* Keep styles minimal to avoid changing your site look */
+    body { padding-top: 70px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1030; }
+    .card-height { min-height: 120px; }
+    .pointer { cursor: pointer; }
+    .small-muted { font-size: 0.9rem; color: #666; }
+    .table-actions button { margin-right: .25rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Top navigation (simple) -->
+  <nav class="navbar navbar-light bg-white topbar shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <img src="pngtree-book-logo-template-design-study-shape-vector-png-image_12526904.png" height="28" style="object-fit:contain; margin-right:8px;">
+        Bright Future School - Admin
+      </a>
+      <div>
+        <span id="adminName" class="me-3 small-muted"></span>
+        <button id="logoutBtn" class="btn btn-outline-secondary btn-sm d-none">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+
+    <!-- Login card (shown when not authenticated) -->
+    <div id="loginCard" class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Admin Login</h5>
+            <p class="small-muted">Use the provided dummy credentials to access the dashboard.</p>
+            <form id="loginForm">
+              <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input id="username" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input id="password" type="password" class="form-control" required>
+              </div>
+              <div id="loginAlert" class="alert alert-danger d-none py-2">Invalid credentials.</div>
+              <button class="btn btn-primary w-100">Sign In</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard (shown when authenticated) -->
+    <div id="dashboard" class="d-none">
+
+      <!-- Top stats -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-3">
+          <div class="card card-height shadow-sm p-3">
+            <h6 class="mb-2">Teachers</h6>
+            <div id="statTeachers" class="h2 fw-bold">0</div>
+            <small class="text-muted">Total teachers loaded</small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card card-height shadow-sm p-3">
+            <h6 class="mb-2">Applications (Applied)</h6>
+            <div id="statApplied" class="h2 fw-bold">0</div>
+            <small class="text-muted">Students who applied</small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card card-height shadow-sm p-3">
+            <h6 class="mb-2">Accepted</h6>
+            <div id="statAccepted" class="h2 fw-bold">0</div>
+            <small class="text-muted">Students accepted</small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card card-height shadow-sm p-3">
+            <h6 class="mb-2">Rejected</h6>
+            <div id="statRejected" class="h2 fw-bold">0</div>
+            <small class="text-muted">Students rejected</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two columns: left = teacher table + add, right = student table -->
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Teachers (Manage)</h5>
+                <button id="addTeacherBtn" class="btn btn-outline-primary btn-sm">Add Teacher</button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-striped align-middle" id="teachersTable">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Subject</th>
+                      <th>Badges</th>
+                      <th class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-0">Student Applications</h5>
+              <small class="text-muted">Change status, edit or remove applications.</small>
+
+              <div class="table-responsive mt-3">
+                <table class="table table-hover align-middle" id="studentsTable">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Grade</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end dashboard -->
+
+  </main>
+
+  <!-- Teacher modal (add/edit) -->
+  <div class="modal fade" id="teacherModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="teacherForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="teacherModalTitle">Add Teacher</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="teacherIndex">
+            <div class="mb-3">
+              <label class="form-label">Full name</label>
+              <input id="t_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Subject</label>
+              <input id="t_subject" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Badges (comma separated)</label>
+              <input id="t_badges" class="form-control" placeholder="e.g. Algebra,Calculus">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Image URL (optional)</label>
+              <input id="t_image" class="form-control" placeholder="Leave blank to use default">
+              <div class="form-text">If left blank the main site default images remain unaffected — teacher cards will still show.</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student modal (edit) -->
+  <div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="studentForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="studentModalTitle">Edit Application</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="studentIndex">
+            <div class="mb-3">
+              <label class="form-label">Full name</label>
+              <input id="s_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Grade</label>
+              <input id="s_grade" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input id="s_email" type="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Status</label>
+              <select id="s_status" class="form-select">
+                <option value="applied">Applied</option>
+                <option value="accepted">Accepted</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="form-text">You can change status to accepted/rejected here.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /***********************
+     * LocalStorage keys:
+     *  - bfs_teachers : array of teacher objects {name,subject,badges,image}
+     *  - bfs_applications : array of student objects {fullName,dob,grade,email,phone,address,status}
+     *  - bfs_session : {logged:true}
+     ***********************/
+
+    // Simple dummy credentials
+    const DUMMY_USER = { username: 'admin', password: 'Admin@123', displayName: 'Administrator' };
+
+    // Utilities
+    const read = (k) => JSON.parse(localStorage.getItem(k) || 'null');
+    const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+    // Seed teachers if not present (seed uses data very similar to your current index teacher list)
+    function seedIfNeeded() {
+      if (!read('bfs_teachers')) {
+        const seed = [
+          { name: "Mr. Tom", subject: "Mathematics", badges: ["Algebra","Calculus"], image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=60" },
+          { name: "Ms. Sarah", subject: "English Literature", badges: ["Literature","Writing"], image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=800&q=60" },
+          { name: "Mr. Hussain", subject: "Science", badges: ["Physics","Chemistry"], image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=60" },
+          { name: "Ms. Maria Khan", subject: "History", badges: ["World History","Government"], image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=60" },
+          { name: "Mr. Samar Abbas", subject: "Computer Science", badges: ["Programming","Web Design"], image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=800&q=60" },
+          { name: "Ms. Ayesha", subject: "Art & Music", badges: ["Visual Arts","Music"], image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=60" }
+        ];
+        write('bfs_teachers', seed);
+      }
+      if (!read('bfs_applications')) {
+        write('bfs_applications', []); // start empty
+      }
+    }
+
+    // Auth handling
+    const loginForm = document.getElementById('loginForm');
+    const loginCard = document.getElementById('loginCard');
+    const dashboard = document.getElementById('dashboard');
+    const loginAlert = document.getElementById('loginAlert');
+    const adminName = document.getElementById('adminName');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function isLoggedIn() {
+      const s = read('bfs_session');
+      return s && s.logged;
+    }
+
+    function showAuthenticatedView() {
+      loginCard.classList.add('d-none');
+      dashboard.classList.remove('d-none');
+      logoutBtn.classList.remove('d-none');
+      adminName.textContent = DUMMY_USER.displayName;
+      renderAll();
+    }
+
+    function showLoginView() {
+      loginCard.classList.remove('d-none');
+      dashboard.classList.add('d-none');
+      logoutBtn.classList.add('d-none');
+      adminName.textContent = '';
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+      if (u === DUMMY_USER.username && p === DUMMY_USER.password) {
+        write('bfs_session', { logged: true, user: DUMMY_USER.username });
+        loginAlert.classList.add('d-none');
+        showAuthenticatedView();
+      } else {
+        loginAlert.classList.remove('d-none');
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('bfs_session');
+      showLoginView();
+    });
+
+    // Teacher management
+    const teachersTableBody = document.querySelector('#teachersTable tbody');
+    const teacherModal = new bootstrap.Modal(document.getElementById('teacherModal'));
+    const teacherForm = document.getElementById('teacherForm');
+    const addTeacherBtn = document.getElementById('addTeacherBtn');
+
+    function renderTeachersTable() {
+      const arr = read('bfs_teachers') || [];
+      teachersTableBody.innerHTML = '';
+      arr.forEach((t, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td>${escapeHtml(t.name)}</td>
+          <td>${escapeHtml(t.subject)}</td>
+          <td>${(t.badges||[]).map(b=>`<span class="badge bg-primary me-1">${escapeHtml(b)}</span>`).join(' ')}</td>
+          <td class="text-end table-actions">
+            <button class="btn btn-sm btn-outline-secondary btn-edit" data-idx="${idx}"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger btn-delete" data-idx="${idx}"><i class="bi bi-trash"></i></button>
+          </td>
+        `;
+        teachersTableBody.appendChild(tr);
+      });
+      // attach handlers
+      document.querySelectorAll('.btn-edit').forEach(btn => btn.addEventListener('click', (e) => {
+        const i = +e.currentTarget.dataset.idx;
+        openTeacherModalForEdit(i);
+      }));
+      document.querySelectorAll('.btn-delete').forEach(btn => btn.addEventListener('click', (e) => {
+        const i = +e.currentTarget.dataset.idx;
+        if (confirm('Delete this teacher?')) {
+          const a = read('bfs_teachers');
+          a.splice(i,1);
+          write('bfs_teachers', a);
+          renderAll();
+        }
+      }));
+    }
+
+    addTeacherBtn.addEventListener('click', () => {
+      document.getElementById('teacherModalTitle').textContent = 'Add Teacher';
+      teacherForm.reset();
+      document.getElementById('teacherIndex').value = '';
+      teacherModal.show();
+    });
+
+    function openTeacherModalForEdit(idx) {
+      const a = read('bfs_teachers') || [];
+      const t = a[idx];
+      if (!t) return;
+      document.getElementById('teacherModalTitle').textContent = 'Edit Teacher';
+      document.getElementById('teacherIndex').value = idx;
+      document.getElementById('t_name').value = t.name || '';
+      document.getElementById('t_subject').value = t.subject || '';
+      document.getElementById('t_badges').value = (t.badges || []).join(',');
+      document.getElementById('t_image').value = t.image || '';
+      teacherModal.show();
+    }
+
+    teacherForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idx = document.getElementById('teacherIndex').value;
+      const name = document.getElementById('t_name').value.trim();
+      const subject = document.getElementById('t_subject').value.trim();
+      const badges = document.getElementById('t_badges').value.split(',').map(s => s.trim()).filter(Boolean);
+      const image = document.getElementById('t_image').value.trim();
+      const arr = read('bfs_teachers') || [];
+      const obj = { name, subject, badges, image: image || '' };
+      if (idx === '') {
+        arr.push(obj);
+      } else {
+        arr[+idx] = obj;
+      }
+      write('bfs_teachers', arr);
+      teacherModal.hide();
+      renderAll();
+    });
+
+    // Student applications management
+    const studentsTableBody = document.querySelector('#studentsTable tbody');
+    const studentModal = new bootstrap.Modal(document.getElementById('studentModal'));
+    const studentForm = document.getElementById('studentForm');
+
+    function renderStudentsTable() {
+      const arr = read('bfs_applications') || [];
+      studentsTableBody.innerHTML = '';
+      arr.forEach((s, idx) => {
+        const statusBadge = (s.status === 'accepted') ? '<span class="badge bg-success">Accepted</span>' :
+                            (s.status === 'rejected') ? '<span class="badge bg-danger">Rejected</span>' :
+                            '<span class="badge bg-secondary">Applied</span>';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td>${escapeHtml(s.fullName)}</td>
+          <td>${escapeHtml(s.grade)}</td>
+          <td>${escapeHtml(s.email)}</td>
+          <td>${statusBadge}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-primary btn-edit-student" data-idx="${idx}"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger btn-delete-student" data-idx="${idx}"><i class="bi bi-trash"></i></button>
+            <div class="btn-group ms-1" role="group">
+              <button class="btn btn-sm btn-success btn-accept" data-idx="${idx}">Accept</button>
+              <button class="btn btn-sm btn-danger btn-reject" data-idx="${idx}">Reject</button>
+            </div>
+          </td>
+        `;
+        studentsTableBody.appendChild(tr);
+      });
+
+      // attach handlers
+      document.querySelectorAll('.btn-edit-student').forEach(b => b.addEventListener('click', e => {
+        const i = +e.currentTarget.dataset.idx;
+        openStudentModalForEdit(i);
+      }));
+      document.querySelectorAll('.btn-delete-student').forEach(b => b.addEventListener('click', e => {
+        const i = +e.currentTarget.dataset.idx;
+        if (confirm('Delete this application?')) {
+          const a = read('bfs_applications') || [];
+          a.splice(i,1);
+          write('bfs_applications', a);
+          renderAll();
+        }
+      }));
+      document.querySelectorAll('.btn-accept').forEach(b => b.addEventListener('click', e => {
+        const i = +e.currentTarget.dataset.idx;
+        changeStudentStatus(i, 'accepted');
+      }));
+      document.querySelectorAll('.btn-reject').forEach(b => b.addEventListener('click', e => {
+        const i = +e.currentTarget.dataset.idx;
+        changeStudentStatus(i, 'rejected');
+      }));
+    }
+
+    function openStudentModalForEdit(idx) {
+      const a = read('bfs_applications') || [];
+      const s = a[idx];
+      if (!s) return;
+      document.getElementById('studentIndex').value = idx;
+      document.getElementById('s_name').value = s.fullName || '';
+      document.getElementById('s_grade').value = s.grade || '';
+      document.getElementById('s_email').value = s.email || '';
+      document.getElementById('s_status').value = s.status || 'applied';
+      studentModal.show();
+    }
+
+    studentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idx = document.getElementById('studentIndex').value;
+      const fullName = document.getElementById('s_name').value.trim();
+      const grade = document.getElementById('s_grade').value.trim();
+      const email = document.getElementById('s_email').value.trim();
+      const status = document.getElementById('s_status').value;
+      const arr = read('bfs_applications') || [];
+      const obj = { fullName, grade, email, status };
+      if (idx === '') {
+        arr.push(obj);
+      } else {
+        arr[+idx] = { ...arr[+idx], ...obj };
+      }
+      write('bfs_applications', arr);
+      studentModal.hide();
+      renderAll();
+    });
+
+    function changeStudentStatus(idx, newStatus) {
+      const arr = read('bfs_applications') || [];
+      if (!arr[idx]) return;
+      arr[idx].status = newStatus;
+      write('bfs_applications', arr);
+      renderAll();
+    }
+
+    // Render stats
+    function renderStats() {
+      const t = (read('bfs_teachers') || []).length;
+      const apps = (read('bfs_applications') || []);
+      const applied = apps.filter(a => a.status === 'applied' || !a.status).length;
+      const accepted = apps.filter(a => a.status === 'accepted').length;
+      const rejected = apps.filter(a => a.status === 'rejected').length;
+
+      document.getElementById('statTeachers').textContent = t;
+      document.getElementById('statApplied').textContent = applied;
+      document.getElementById('statAccepted').textContent = accepted;
+      document.getElementById('statRejected').textContent = rejected;
+    }
+
+    // Combine all render
+    function renderAll() {
+      renderStats();
+      renderTeachersTable();
+      renderStudentsTable();
+      // Also broadcast an event so index.html snippet (if present) can update teacher cards
+      window.dispatchEvent(new Event('bfs-data-changed'));
+    }
+
+    // sanitize minimal html
+    function escapeHtml(s) {
+      if (!s && s !== 0) return '';
+      return String(s).replace(/[&<>"']/g, function(m) {
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]);
+      });
+    }
+
+    // Initialization
+    (function init() {
+      seedIfNeeded();
+      if (isLoggedIn()) {
+        showAuthenticatedView();
+      } else {
+        showLoginView();
+      }
+    })();
+
+  </script>
+</body>
+</html>
