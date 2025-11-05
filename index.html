@@ -64,6 +64,117 @@
     }
   </style>
 </head>
+  <!-- START: Insert this script into your existing index.html before </body> -->
+<script>
+/*
+  This script makes:
+   - Admission form store applications into localStorage under 'bfs_applications'
+   - Teachers on main site render from 'bfs_teachers' so admin changes reflect here
+   - Listens for 'bfs-data-changed' events (fired by admin.html) to re-render if the same browser is used.
+
+  IMPORTANT: keep your existing HTML intact. This only adds dynamic behavior.
+*/
+
+(function () {
+  // use same key names used in admin.html
+  const TEACHERS_KEY = 'bfs_teachers';
+  const APPS_KEY = 'bfs_applications';
+
+  function read(k){ return JSON.parse(localStorage.getItem(k) || 'null'); }
+  function write(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+
+  // If no arrays exist, initialize (admin.html also seeds teachers if missing)
+  if (!read(TEACHERS_KEY)) write(TEACHERS_KEY, []);
+  if (!read(APPS_KEY)) write(APPS_KEY, []);
+
+  // Hook admission form (your page has #admissionForm)
+  const admissionForm = document.getElementById('admissionForm');
+  if (admissionForm) {
+    admissionForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (!admissionForm.checkValidity()) { admissionForm.reportValidity(); return; }
+
+      const data = {
+        fullName: (document.getElementById('fullName')||{}).value || '',
+        dob: (document.getElementById('dob')||{}).value || '',
+        grade: (document.getElementById('grade')||{}).value || '',
+        email: (document.getElementById('email')||{}).value || '',
+        phone: (document.getElementById('phone')||{}).value || '',
+        address: (document.getElementById('address')||{}).value || '',
+        status: 'applied',
+        submittedAt: new Date().toISOString()
+      };
+
+      const arr = read(APPS_KEY) || [];
+      arr.push(data);
+      write(APPS_KEY, arr);
+
+      // show ack if present
+      const ack = document.getElementById('ack');
+      if (ack) {
+        ack.classList.remove('d-none');
+        ack.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      admissionForm.reset();
+
+      // optionally notify other tabs (admin.html) to update
+      window.dispatchEvent(new Event('bfs-data-changed'));
+    });
+  }
+
+  // Replace teacher cards area with dynamic rendering, but keep the same container structure:
+  // On your index.html teacher cards are inside a container .row (we will find #faculty .row)
+  const facultySection = document.getElementById('faculty');
+  if (facultySection) {
+    const row = facultySection.querySelector('.row.g-4') || facultySection.querySelector('.row');
+    if (row) {
+      // Clear existing static teacher cards (we will re-render)
+      // Note: We intentionally do not remove your images/colors. Rendered cards will use the same markup & classes.
+      row.innerHTML = ''; // replaced by dynamic render
+
+      function renderTeacherCards() {
+        const a = read(TEACHERS_KEY) || [];
+        row.innerHTML = '';
+        a.forEach(t => {
+          const col = document.createElement('div');
+          col.className = 'col-md-6 col-lg-4';
+          col.innerHTML = `
+            <div class="card teacher-card h-100 shadow-sm">
+              <img src="${t.image || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=60'}" class="card-img-top" alt="${(t.name||'Teacher')}">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${escapeHtml(t.name)}</h5>
+                <p class="mb-1 text-muted">${escapeHtml(t.subject)}</p>
+                <p class="card-text">${escapeHtml((t.description || '').slice(0,120))}</p>
+                <div class="mt-auto">
+                  ${(t.badges || []).map(b => `<span class="badge bg-primary">${escapeHtml(b)}</span>`).join(' ')}
+                </div>
+              </div>
+            </div>
+          `;
+          row.appendChild(col);
+        });
+      }
+
+      // minimal helper
+      function escapeHtml(s) {
+        if (!s && s !== 0) return '';
+        return String(s).replace(/[&<>"']/g, function(m) {
+          return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]);
+        });
+      }
+
+      // render initial
+      renderTeacherCards();
+
+      // listen for changes (from admin.html or admission form)
+      window.addEventListener('bfs-data-changed', renderTeacherCards);
+    }
+  }
+
+})();
+</script>
+<!-- END: index_localstorage_snippet.js -->
+
 <body>
 
   <!-- Navigation -->
@@ -539,3 +650,4 @@
   </script>
 </body>
 </html>
+
